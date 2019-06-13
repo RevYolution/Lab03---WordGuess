@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 
 namespace WordGuess
 {
@@ -13,12 +14,17 @@ namespace WordGuess
             catch (Exception e)
             {
 
-                throw;
+                Console.WriteLine(e.Message);
+            }
+            finally
+            {
+                Console.WriteLine("Thank you for playing. See you next time.");
             }
         }
 
         public static void MainMenu()
         {
+            string filePath = "/TestFile.txt";
             while (true)
             {
                 int userSelection = MenuSelection();
@@ -29,7 +35,7 @@ namespace WordGuess
                 }
                 if (userSelection == 2)
                 {
-
+                    EditMenu(filePath);
                 }
                 if (userSelection == 3)
                 {
@@ -49,6 +55,15 @@ namespace WordGuess
             int choiceNumber = Convert.ToInt32(userChoice);
 
             return choiceNumber;
+        }
+
+        public static void EditMenu(string filePath)
+        {
+            string[] testFile = File.ReadAllLines(filePath);
+            for (int i = 0; i < testFile.Length; i++)
+            {
+                Console.WriteLine(testFile[i]);
+            }
         }
     }
 }

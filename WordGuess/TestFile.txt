@@ -1,0 +1,11 @@
+TEST FILE for Guessing Game
+Hermione Granger
+Neville Longbottom
+Harry Potter
+Fred Weasley
+George Weasley
+Ginny Weasley
+Sirius Black
+Albus Dumbledore
+Rubeus Hagrid
+Remus Lupin
