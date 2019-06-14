@@ -118,8 +118,8 @@ namespace WordGuess
 
             // Populates random word based off of random number.
             int getRandomWord = grabRandomNumber.Next(0, charactersForGame.Length - 1);
-            string wordForGame = charactersForGame[getRandomWord];
-            //Console.WriteLine($"{wordForGame}");
+            string wordForGame = charactersForGame[getRandomWord].ToUpper();
+
             // Sets up list for guessed letters
             List<string> letterGuessed = new List<string>();
 
@@ -132,51 +132,96 @@ namespace WordGuess
                 lineArray[i] = '_';
             }
 
+            // Game Play Logic
             bool playingGame = true;
 
-            //while (playingGame)
-            //{
-            //Console.Clear();
-            Console.WriteLine();
-            for (int i = 0; i < lineArray.Length; i++)
+            while (playingGame)
+            {
+                    Console.WriteLine();
+                for (int i = 0; i < lineArray.Length; i++)
+                    {
+                        Console.Write($"{lineArray[i]}");
+                    }
+            
+
+                Console.WriteLine();
+                Console.Write("Guesses made: [");
+                foreach (var letter in letterGuessed)
                 {
-                    Console.Write($"{lineArray[i]}");
+                    Console.Write($"{letter} ");
                 }
-            //}
+                Console.Write("]");
+                Console.WriteLine();
 
-            Console.WriteLine();
-            Console.Write("Guesses made: [");
-            foreach (var letter in letterGuessed)
-            {
-                Console.Write($"{letter} ");
-            }
-            Console.Write("]");
-            Console.WriteLine();
+                Console.WriteLine("Guess a letter:");
+                string userGuess = Console.ReadLine().ToUpper();
 
-            Console.WriteLine("Guess a letter:");
-            string userGuess = Console.ReadLine();
+                if (userGuess.Length > 1)
+                {
+                    Console.WriteLine("Only one letter at a time please.");
+                }
+                // Compare input letter to hidden word
+                else if (userGuess.Length == 1)
+                {
+                    letterGuessed.Add(userGuess);
+                    char letterToCompare = Convert.ToChar(userGuess);
 
-            if (userGuess.Length > 1)
-            {
-                Console.WriteLine("Only one letter at a time please.");
-            }
-            else if (userGuess.Length == 1)
-            {
-                letterGuessed.Add(userGuess);
-                char letterToCompare = Convert.ToChar(userGuess);
+                    for (int i = 0; i < lineArray.Length; i++)
+                    {
+                        if (letterArray[i] == letterToCompare)
+                        {
+                            Console.WriteLine("BOOM GOT ONE!!");
+                            lineArray[i] = letterToCompare;
+                        }
+                    }
+                }
 
-                //char letterToCompare = char.Parse(letterGuessed);
+                // Checks array for any '_' ends game if none are present. 
                 for (int i = 0; i < lineArray.Length; i++)
                 {
-                    if (letterArray[i] == letterToCompare)
+                    string completeWordCheck = new string(lineArray);
+                    if (!completeWordCheck.Contains('_'))
                     {
-                        Console.WriteLine("BOOM GOT ONE!!");
-                        lineArray[i] = letterToCompare;
+                        playingGame = false;
                     }
                 }
             }
+            if (!playingGame)
+            {
+                Console.Clear();
+                string wonGame = "YOU GOT IT!?!";
+                for (int i = 0; i < wonGame.Length; i++)
+                {
+                    int printWait = 100;
+                    Thread.Sleep(printWait);
+                    Console.Write(wonGame[i]);
+                }
+                Console.WriteLine();
+                Console.Write($"{wordForGame}");
+                string wonImage = @"                                        
+                                         _ __
+        ___                             | '  \
+   ___  \ /  ___         ,'\_           | .-. \        /|
+   \ /  | |,'__ \  ,'\_  |   \          | | | |      ,' |_   /|
+ _ | |  | |\/  \ \ |   \ | |\_|    _    | |_| |   _ '-. .-',' |_   _
+// | |  | |____| | | |\_|| |__    //    |     | ,'_`. | | '-. .-',' `. ,'\_
+\\_| |_,' .-, _  | | |   | |\ \  //    .| |\_/ | / \ || |   | | / |\  \|   \
+ `-. .-'| |/ / | | | |   | | \ \//     |  |    | | | || |   | | | |_\ || |\_|
+   | |  | || \_| | | |   /_\  \ /      | |`    | | | || |   | | | .---'| |
+   | |  | |\___,_\ /_\ _      //       | |     | \_/ || |   | | | |  /\| |
+   /_\  | |           //_____//       .||`      `._,' | |   | | \ `-' /| |
+        /_\           `------'        \ |              `.\  | |  `._,' /_\
+                                       \|                    `.\                
+";
+                Console.WriteLine(wonImage);
+
+            }
         }
 
+        /// <summary>
+        /// View text file contents.
+        /// </summary>
+        /// <param name="filePath">Array of strings populated from a text file</param>
     public static void ViewCharacters(string filePath)
         {
 
@@ -188,6 +233,10 @@ namespace WordGuess
             }
         }
 
+        /// <summary>
+        /// Add new lines of text to file for guessing game.
+        /// </summary>
+        /// <param name="filePath">Array of strings populated from a text file</param>
         public static void AddCharacters(string filePath)
         {
             string[] testAdd = { "Jon Rice", "Alex Oleszko" };
@@ -202,6 +251,10 @@ namespace WordGuess
             Console.WriteLine($"The text was added to the file.");
         }
 
+        /// <summary>
+        /// Remove lines of text from file to no longer allow in guessing game.
+        /// </summary>
+        /// <param name="filePath">Array of strings populated from a text file</param>
         public static void RemoveCharacters (string filePath)
         {
             Console.WriteLine("Coming soon");
