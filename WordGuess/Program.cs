@@ -101,6 +101,18 @@ namespace WordGuess
         /// <param name="filePath">Array of strings populated from a text file</param>
         public static void PlayGame(string filePath)
         {
+            Console.Clear();
+            Console.WriteLine();
+
+            string guessPrompt = "WHO'S THAT CHARACTER?";
+            for (int i = 0; i < guessPrompt.Length; i++)
+            {
+                int printWait = 100;
+                Thread.Sleep(printWait);
+                Console.Write(guessPrompt[i]);
+            }
+
+
             string[] charactersForGame = File.ReadAllLines(filePath);
             Random grabRandomNumber = new Random();
 
@@ -108,8 +120,10 @@ namespace WordGuess
             int getRandomWord = grabRandomNumber.Next(0, charactersForGame.Length - 1);
             string wordForGame = charactersForGame[getRandomWord];
             //Console.WriteLine($"{wordForGame}");
-            // Sets up lines to display on game board for words
+            // Sets up list for guessed letters
             List<string> letterGuessed = new List<string>();
+
+            // Sets up lines to display on game board for words
             char[] letterArray = wordForGame.ToCharArray();
             char[] lineArray = new char[letterArray.Length];
 
@@ -118,10 +132,52 @@ namespace WordGuess
                 lineArray[i] = '_';
             }
 
-      
+            bool playingGame = true;
+
+            //while (playingGame)
+            //{
+            //Console.Clear();
+            Console.WriteLine();
+            for (int i = 0; i < lineArray.Length; i++)
+                {
+                    Console.Write($"{lineArray[i]}");
+                }
+            //}
+
+            Console.WriteLine();
+            Console.Write("Guesses made: [");
+            foreach (var letter in letterGuessed)
+            {
+                Console.Write($"{letter} ");
+            }
+            Console.Write("]");
+            Console.WriteLine();
+
+            Console.WriteLine("Guess a letter:");
+            string userGuess = Console.ReadLine();
+
+            if (userGuess.Length > 1)
+            {
+                Console.WriteLine("Only one letter at a time please.");
+            }
+            else if (userGuess.Length == 1)
+            {
+                letterGuessed.Add(userGuess);
+                char letterToCompare = Convert.ToChar(userGuess);
+
+                //char letterToCompare = char.Parse(letterGuessed);
+                for (int i = 0; i < lineArray.Length; i++)
+                {
+                    if (letterArray[i] == letterToCompare)
+                    {
+                        Console.WriteLine("BOOM GOT ONE!!");
+                        lineArray[i] = letterToCompare;
+                    }
+                }
+            }
         }
 
-        public static void ViewCharacters(string filePath)
+    public static void ViewCharacters(string filePath)
         {
 
             string[] testFile = File.ReadAllLines(filePath);
