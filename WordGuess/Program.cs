@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Threading;
 
 namespace WordGuess
 {
@@ -31,7 +33,7 @@ namespace WordGuess
 
                 if (userSelection == 1)
                 {
-                    Console.WriteLine("We are doing things");
+                    PlayGame(filePath);
                 }
                 if (userSelection == 2)
                 {
@@ -48,6 +50,14 @@ namespace WordGuess
                     if (editMenuReturn == 3)
                     {
                         AddCharacters(filePath);
+                    }
+                    if (editMenuReturn == 4)
+                    {
+                        RemoveCharacters(filePath);
+                    }
+                    if (editMenuReturn == 5)
+                    {
+                        break;
                     }
                 }
                 if (userSelection == 3)
@@ -77,11 +87,38 @@ namespace WordGuess
             Console.WriteLine("2: View Harry Potter Characters");
             Console.WriteLine("3: Add A Character");
             Console.WriteLine("4: Delete A Character");
+            Console.WriteLine("5: Exit");
 
             string editMenuChoice = Console.ReadLine();
             int editMenuReturn = Convert.ToInt32(editMenuChoice);
 
             return editMenuReturn;
+        }
+
+        /// <summary>
+        /// Populates guessing game with random text line from file.
+        /// </summary>
+        /// <param name="filePath">Array of strings populated from a text file</param>
+        public static void PlayGame(string filePath)
+        {
+            string[] charactersForGame = File.ReadAllLines(filePath);
+            Random grabRandomNumber = new Random();
+
+            // Populates random word based off of random number.
+            int getRandomWord = grabRandomNumber.Next(0, charactersForGame.Length - 1);
+            string wordForGame = charactersForGame[getRandomWord];
+            //Console.WriteLine($"{wordForGame}");
+            // Sets up lines to display on game board for words
+            List<string> letterGuessed = new List<string>();
+            char[] letterArray = wordForGame.ToCharArray();
+            char[] lineArray = new char[letterArray.Length];
+
+            for (int i = 0; i < lineArray.Length; i++)
+            {
+                lineArray[i] = '_';
+            }
+
+      
         }
 
         public static void ViewCharacters(string filePath)
@@ -99,21 +136,21 @@ namespace WordGuess
         {
             string[] testAdd = { "Jon Rice", "Alex Oleszko" };
             File.AppendAllLines(filePath, testAdd);
-            Console.WriteLine($"The text: {testAdd} was added to the file.");
+
+            string[] testFile = File.ReadAllLines(filePath);
+            for (int i = 0; i < testFile.Length; i++)
+            {
+
+                Console.WriteLine(testFile[i]);
+            }
+            Console.WriteLine($"The text was added to the file.");
         }
 
-
-        static void FileAppendText(string path)
+        public static void RemoveCharacters (string filePath)
         {
-            string[] words = {
-                "to think of many things!",
-                "of ships and shoes and ceiling wax",
-                "and cabbages and kings!"
-            };
-            File.AppendAllLines(path, words);
-
-            string phrase = "Cat in the Hat!";
-            File.AppendAllText(path, phrase);
+            Console.WriteLine("Coming soon");
         }
+
+
     }
 }
