@@ -49,7 +49,7 @@ namespace WordGuess
                     }
                     if (editMenuReturn == 3)
                     {
-                        AddCharacters(filePath);
+                       // AddCharacters(filePath);
                     }
                     if (editMenuReturn == 4)
                     {
@@ -104,7 +104,7 @@ namespace WordGuess
             Console.Clear();
             Console.WriteLine();
 
-            string guessPrompt = "WHO'S THAT CHARACTER?";
+            string guessPrompt = "GUESS THE HARRY POTTER CHARACTER?";
             for (int i = 0; i < guessPrompt.Length; i++)
             {
                 int printWait = 100;
@@ -112,6 +112,8 @@ namespace WordGuess
                 Console.Write(guessPrompt[i]);
             }
 
+            int wait = 1500;
+            Thread.Sleep(wait);
 
             string[] charactersForGame = File.ReadAllLines(filePath);
             Random grabRandomNumber = new Random();
@@ -137,7 +139,8 @@ namespace WordGuess
 
             while (playingGame)
             {
-                    Console.WriteLine();
+                Console.Clear();
+                    Console.WriteLine("CHARACTER NAME");
                 for (int i = 0; i < lineArray.Length; i++)
                     {
                         Console.Write($"{lineArray[i]}");
@@ -175,8 +178,9 @@ namespace WordGuess
                         }
                     }
                 }
+                Thread.Sleep(wait);
 
-                // Checks array for any '_' ends game if none are present. 
+                // Checks array for any '_', ends game if none are present. 
                 for (int i = 0; i < lineArray.Length; i++)
                 {
                     string completeWordCheck = new string(lineArray);
@@ -237,19 +241,21 @@ namespace WordGuess
         /// Add new lines of text to file for guessing game.
         /// </summary>
         /// <param name="filePath">Array of strings populated from a text file</param>
-        public static void AddCharacters(string filePath)
-        {
-            string[] testAdd = { "Jon Rice", "Alex Oleszko" };
-            File.AppendAllLines(filePath, testAdd);
+        //public static void AddCharacters(string filePath)
+        //{
+        //    Console.WriteLine("Who would you like to add?");
+        //    //string[] testAdd = { "Jon Rice", "Alex Oleszko" };
+        //    string userAdd =Console.ReadLine();
+        //    File.AppendAllLines(filePath, userAdd);
 
-            string[] testFile = File.ReadAllLines(filePath);
-            for (int i = 0; i < testFile.Length; i++)
-            {
+        //    string[] testFile = File.ReadAllLines(filePath);
+        //    for (int i = 0; i < testFile.Length; i++)
+        //    {
 
-                Console.WriteLine(testFile[i]);
-            }
-            Console.WriteLine($"The text was added to the file.");
-        }
+        //        Console.WriteLine(testFile[i]);
+        //    }
+        //    Console.WriteLine($"The text was added to the file.");
+        //}
 
         /// <summary>
         /// Remove lines of text from file to no longer allow in guessing game.
