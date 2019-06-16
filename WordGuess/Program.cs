@@ -49,7 +49,7 @@ namespace WordGuess
                     }
                     if (editMenuReturn == 3)
                     {
-                       // AddCharacters(filePath);
+                        AddCharacters(filePath);
                     }
                     if (editMenuReturn == 4)
                     {
@@ -222,11 +222,35 @@ namespace WordGuess
             }
         }
 
+        public static bool AddToFile(string userAdd)
+        {
+            string filePath = "../TestFile.txt";
+
+            if (File.Exists(filePath))
+            {
+                string[] fileCharacters = File.ReadAllLines(filePath);
+                for (int i = 0; i < fileCharacters.Length; i++)
+                {
+                    if (fileCharacters[i] == userAdd)
+                    {
+                        return false;
+                    }
+                }
+            }
+            using (StreamWriter w = File.AppendText(filePath))
+            {
+                w.WriteLine(userAdd);
+            }
+            return true;
+        }
+
+
+
         /// <summary>
         /// View text file contents.
         /// </summary>
         /// <param name="filePath">Array of strings populated from a text file</param>
-    public static void ViewCharacters(string filePath)
+        public static void ViewCharacters(string filePath)
         {
 
             string[] testFile = File.ReadAllLines(filePath);
@@ -241,21 +265,21 @@ namespace WordGuess
         /// Add new lines of text to file for guessing game.
         /// </summary>
         /// <param name="filePath">Array of strings populated from a text file</param>
-        //public static void AddCharacters(string filePath)
-        //{
-        //    Console.WriteLine("Who would you like to add?");
-        //    //string[] testAdd = { "Jon Rice", "Alex Oleszko" };
-        //    string userAdd =Console.ReadLine();
-        //    File.AppendAllLines(filePath, userAdd);
+        public static void AddCharacters(string filePath)
+        {
+            Console.WriteLine("Who would you like to add?");
+            string userAdd = Console.ReadLine();
+            AddToFile(userAdd);
 
-        //    string[] testFile = File.ReadAllLines(filePath);
-        //    for (int i = 0; i < testFile.Length; i++)
-        //    {
 
-        //        Console.WriteLine(testFile[i]);
-        //    }
-        //    Console.WriteLine($"The text was added to the file.");
-        //}
+            string[] testFile = File.ReadAllLines(filePath);
+            for (int i = 0; i < testFile.Length; i++)
+            {
+
+                Console.WriteLine(testFile[i]);
+            }
+            Console.WriteLine($"The text was added to the file.");
+        }
 
         /// <summary>
         /// Remove lines of text from file to no longer allow in guessing game.
