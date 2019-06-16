@@ -15,7 +15,7 @@ Guessing game that allows users to input letters to guess a hidden word. Users c
 ## Getting Started
 Clone this repository to your local machine.
 ```
-$ git clone [repo clone url here]
+$ git clone [https://github.com/RevYolution/Lab03---WordGuess.git]
 ```
 #### To run the program from Visual Studio:
 Select ```File``` -> ```Open``` -> ```Project/Solution```
