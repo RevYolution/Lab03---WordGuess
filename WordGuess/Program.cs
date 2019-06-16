@@ -267,18 +267,23 @@ namespace WordGuess
         /// <param name="filePath">Array of strings populated from a text file</param>
         public static void AddCharacters(string filePath)
         {
-            Console.WriteLine("Who would you like to add?");
-            string userAdd = Console.ReadLine();
-            AddToFile(userAdd);
-
-
+            Console.Clear();
+            Console.WriteLine("Here are the current characters in the game:");
+            Console.WriteLine();
             string[] testFile = File.ReadAllLines(filePath);
             for (int i = 0; i < testFile.Length; i++)
             {
 
                 Console.WriteLine(testFile[i]);
             }
-            Console.WriteLine($"The text was added to the file.");
+            Console.WriteLine();
+            Console.WriteLine();
+            Console.WriteLine("Who would you like to add?");
+            string userAdd = Console.ReadLine();
+            AddToFile(userAdd);
+
+
+            Console.WriteLine($"The character was added to the file.");
         }
 
         /// <summary>
