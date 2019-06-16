@@ -7,6 +7,7 @@ namespace WordGuess
 {
     class Program
     {
+        public static readonly string filePath = "../TestFile.txt";
         static void Main(string[] args)
         {
             try
@@ -222,6 +223,12 @@ namespace WordGuess
             }
         }
 
+        public static string[] ReadCharacters()
+        {
+            string filePath = "../TestFile.txt";
+            string[] words = File.ReadAllLines(filePath);
+            return words;
+        }
         public static bool AddToFile(string userAdd)
         {
             string filePath = "../TestFile.txt";
@@ -244,6 +251,17 @@ namespace WordGuess
             return true;
         }
 
+        static void RemoveFromFile(int number)
+        {
+            string[] fileCharacters = ReadCharacters();
+            using (StreamWriter sw = File.CreateText(filePath)) 
+            {
+                for (int i = 0; i < fileCharacters.Length; i++)
+                {
+                    if (i != number) sw.WriteLine(fileCharacters[i]);
+                }
+            }
+        }
 
 
         /// <summary>
@@ -292,9 +310,25 @@ namespace WordGuess
         /// <param name="filePath">Array of strings populated from a text file</param>
         public static void RemoveCharacters (string filePath)
         {
-            Console.WriteLine("Coming soon");
-        }
+            Console.Clear();
+            Console.WriteLine("Here are the current characters in the game:");
+            Console.WriteLine();
+            string[] testFile = File.ReadAllLines(filePath);
+            for (int i = 0; i < testFile.Length; i++)
+            {
 
+                Console.WriteLine($"{i + 1}. {testFile[i]}");
+            }
+            Console.WriteLine();
+            Console.WriteLine();
+            Console.WriteLine("Enter the number of the character you would like to remove:");
+            string deleteInput = Console.ReadLine();
+            if (Int32.TryParse(deleteInput, out int index))
+            {
+                RemoveFromFile(index - 1);
+                Console.WriteLine("Removed.");
+            }
+        }
 
     }
 }
